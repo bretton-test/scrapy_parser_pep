@@ -13,11 +13,11 @@ class PepSpider(scrapy.Spider):
 
     def parse(self, response):
         links = [
-            info.css('a::text').get()
+            info.css('a::attr(href)').get()
             for info in response.xpath('//*[@id="index-by-category"]').css(
                 'tr'
             )
-            if info.css('a::text').get() is not None
+            if info.css('a::attr(href)').get() is not None
         ]
 
         for pep_link in links:
