@@ -1,6 +1,7 @@
 import csv
 import datetime as dt
 from dataclasses import dataclass
+from collections import Counter
 
 from pep_parse.settings import DATETIME_FORMAT, BASE_DIR
 
@@ -35,8 +36,9 @@ class PepParsePipeline:
 
     def close_spider(self, spider):
         results = [('Статус', 'Количество')]
-        statuses = [item.status for item in self.peps.values()]
-        for status in sorted(list(set(statuses))):
-            results.append((status, str(statuses.count(status))))
+        statuses = sorted([item.status for item in self.peps.values()])
+        for key, value in Counter(statuses).items():
+            results.append((key, str(value)))
+
         results.append(('Total ', str(len(self.peps))))
         save_to_csv(results)

@@ -1,5 +1,4 @@
 import re
-
 import scrapy
 
 from pep_parse.items import PepParseItem
@@ -8,9 +7,12 @@ from pep_parse.settings import PEP_DOC_DOMAIN, PEP_DOC_URL
 
 class PepSpider(scrapy.Spider):
     name = 'pep'
-    allowed_domains = [PEP_DOC_DOMAIN]
+    allowed_domains = (PEP_DOC_DOMAIN,)
     start_urls = [PEP_DOC_URL]
 
+    # кортеж использовать нельзя. pytest невелит
+    # В классе PepSpider для атрибута start_urls
+    # установите список со значением https://peps.python.org/
     def parse(self, response):
         links = [
             info.css('a::attr(href)').get()
