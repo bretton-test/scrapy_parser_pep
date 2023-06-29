@@ -10,7 +10,7 @@ class PepSpider(scrapy.Spider):
     allowed_domains = (PEP_DOC_DOMAIN,)
     start_urls = [PEP_DOC_URL]
 
-    # кортеж использовать нельзя. pytest невелит
+    # кортеж использовать нельзя. pytest не велит
     # В классе PepSpider для атрибута start_urls
     # установите список со значением https://peps.python.org/
     def parse(self, response):
